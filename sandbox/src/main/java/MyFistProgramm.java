@@ -3,9 +3,11 @@ import java.math.*;
 public class MyFistProgramm{
     public static void main (String[] args){
 
-        Point p = new Point(1,3,4,3);
+        Point p2 = new Point(3,4);
+        Point p1 = new Point(1,4);
 
-        System.out.println(p.distance());
+
+        System.out.println(p1.distance(p2));
 
     }
 
