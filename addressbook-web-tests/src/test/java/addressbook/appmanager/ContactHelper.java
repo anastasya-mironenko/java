@@ -2,8 +2,11 @@ package addressbook.appmanager;
 
 import addressbook.model.CustomerData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 /**
  * Created by Анастасия on 19.03.2018.
@@ -11,19 +14,25 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class ContactHelper extends HelperBase{
 
     public ContactHelper(WebDriver wd) {
-        super(wd);;
+        super(wd);
     }
 
     public void submitContactCreation() {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void fillContactForm(CustomerData customerData) {
+    public void fillContactForm(CustomerData customerData, boolean creation) {
         type(By.name("firstname"),customerData.getFirstname());
         type(By.name("lastname"),customerData.getLastname());
         type(By.name("address"),customerData.getAddress());
         type(By.name("mobile"),customerData.getMobile());
         type(By.name("email"),customerData.getEmail());
+
+        if(creation){
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(customerData.getGroup());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
     public void initContactCreation() {
